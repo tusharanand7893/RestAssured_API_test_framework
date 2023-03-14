@@ -1,5 +1,7 @@
 package com.autobot.api.goRest;
 
+import com.autobot.api.products.goRests.payload.CreateUserPayload;
+import com.autobot.api.products.goRests.response.GetUserListsResponse;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -10,9 +12,14 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.given;
+import java.util.List;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+
+@Test
 public class GoRestTests {
+
 
     RequestSpecification requestSpecification;
     ResponseSpecification responseSpecification;
@@ -36,10 +43,49 @@ public class GoRestTests {
 
     @Test
     public void validateGetUserLists(){
-       given(requestSpecification)
+       List<GetUserListsResponse> getUserListsResponseList= given(requestSpecification)
                .when().get("/public/v2/users")
                .then().spec(responseSpecification)
-               .assertThat().statusCode(HttpStatus.SC_OK);
+               .assertThat().statusCode(HttpStatus.SC_OK)
+               .extract()
+               .body()
+               .jsonPath()
+               .getList("",GetUserListsResponse.class);
+        System.out.println("printed++ "+getUserListsResponseList);
+        for(GetUserListsResponse userList: getUserListsResponseList){
+            System.out.println(userList.getName());
+            userList.AssertBodyResult();
+        }
+
+    }
+
+    @Test
+    public void validateGetUserLists1(){
+        GetUserListsResponse getUserListsResponseList= given(requestSpecification)
+                .when().get("/public/v2/users")
+                .then().spec(responseSpecification)
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract()
+                .response()
+                .as(GetUserListsResponse.class);
+
+    }
+
+    @Test
+    public void validateCreateUserLists(){
+        CreateUserPayload createUserPayload=new CreateUserPayload();
+              createUserPayload.setName("Tenali");
+              createUserPayload.setEmail("tenali.ramakrishna@15ce.com");
+              createUserPayload.setStatus("active");
+              createUserPayload.setGender("male");
+        given(requestSpecification)
+                .when()
+                .body(createUserPayload)
+                .post("/public/v2/users")
+                .then().spec(responseSpecification)
+                .assertThat()
+                .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
+                .body("field",equalTo("email"),"message",equalTo("has already been taken"));
 
 
     }
