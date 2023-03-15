@@ -7,11 +7,11 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
-public class SpecBuilder {
+public class SpecificationBuilder {
 
     public RequestSpecification getRequestSpecification(){
         return new RequestSpecBuilder()
-                .setBaseUri("")
+                .setBaseUri("https://gorest.co.in")
                 .setContentType(ContentType.JSON)
                 .addHeader("","")
                 .log(LogDetail.ALL)

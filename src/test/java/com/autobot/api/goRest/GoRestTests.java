@@ -1,11 +1,14 @@
 package com.autobot.api.goRest;
 
+import com.autobot.api.products.goRests.endpoints.GoRestClient;
 import com.autobot.api.products.goRests.payload.CreateUserPayload;
 import com.autobot.api.products.goRests.response.GetUserListsResponse;
+import com.google.inject.Inject;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
@@ -43,16 +46,10 @@ public class GoRestTests {
 
     @Test
     public void validateGetUserLists(){
-       List<GetUserListsResponse> getUserListsResponseList= given(requestSpecification)
-               .when().get("/public/v2/users")
-               .then().spec(responseSpecification)
-               .assertThat().statusCode(HttpStatus.SC_OK)
-               .extract()
-               .body()
-               .jsonPath()
-               .getList("",GetUserListsResponse.class);
-        System.out.println("printed++ "+getUserListsResponseList);
-        for(GetUserListsResponse userList: getUserListsResponseList){
+        GoRestClient goRestClient=new GoRestClient();
+        List<GetUserListsResponse> getUserListsResponses=goRestClient.getUserList().body().jsonPath().getList("", GetUserListsResponse.class);
+        System.out.println("printed++ "+getUserListsResponses);
+        for(GetUserListsResponse userList: getUserListsResponses){
             System.out.println(userList.getName());
             userList.AssertBodyResult();
         }
@@ -86,6 +83,20 @@ public class GoRestTests {
                 .assertThat()
                 .statusCode(HttpStatus.SC_UNPROCESSABLE_ENTITY)
                 .body("field",equalTo("email"),"message",equalTo("has already been taken"));
+
+
+    }
+
+    @Test
+    public void validateCreateUserLists1(){
+        CreateUserPayload createUserPayload=new CreateUserPayload();
+        createUserPayload.setName("Tenali");
+        createUserPayload.setEmail("tenali.ramakrishna@15ce.com");
+        createUserPayload.setStatus("active");
+        createUserPayload.setGender("male");
+        GoRestClient goRestClient=new GoRestClient();
+        Response response= goRestClient.postUserLists(createUserPayload);
+        System.out.println(response.toString());
 
 
     }
