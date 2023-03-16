@@ -9,11 +9,10 @@ import io.restassured.specification.ResponseSpecification;
 
 public class SpecificationBuilder {
 
-    public RequestSpecification getRequestSpecification(){
+    public RequestSpecification getRequestSpecification(String uri){
         return new RequestSpecBuilder()
-                .setBaseUri("https://gorest.co.in")
+                .setBaseUri(uri)
                 .setContentType(ContentType.JSON)
-                .addHeader("","")
                 .log(LogDetail.ALL)
                 .build();
 

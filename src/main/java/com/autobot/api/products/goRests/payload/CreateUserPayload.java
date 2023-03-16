@@ -1,45 +1,29 @@
 package com.autobot.api.products.goRests.payload;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateUserPayload {
     public String name;
     public String email;
     public String gender;
     public String status;
 
-    public String getEmail() {
-        return email;
-    }
+public CreateUserPayload createUserPayload(String name,String email,String gender,String status){
+    return CreateUserPayload.builder()
+            .name(name)
+            .email(email)
+            .status(status)
+            .gender(gender)
+            .build();
+}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public String getGender() {
-        return gender;
-    }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
