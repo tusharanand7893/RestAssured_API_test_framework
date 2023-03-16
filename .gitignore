@@ -1,3 +1,6 @@
 /.gradle/7.1/
 /.gradle/buildOutputCleanup/
 /.idea/
+/.gradle/
+/gradle/
+/build/

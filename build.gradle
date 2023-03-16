@@ -21,7 +21,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.skyscreamer/jsonassert
     implementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
     // https://mvnrepository.com/artifact/com.google.inject/guice
     implementation group: 'com.google.inject', name: 'guice', version: '5.1.0'
     // https://mvnrepository.com/artifact/org.assertj/assertj-core

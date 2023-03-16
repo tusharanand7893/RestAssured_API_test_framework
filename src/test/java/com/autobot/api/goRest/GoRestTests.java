@@ -3,7 +3,6 @@ package com.autobot.api.goRest;
 import com.autobot.api.products.goRests.endpoints.GoRestClient;
 import com.autobot.api.products.goRests.payload.CreateUserPayload;
 import com.autobot.api.products.goRests.response.GetUserListsResponse;
-import com.google.inject.Inject;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -89,17 +88,15 @@ public class GoRestTests {
 
     @Test
     public void validateCreateUserLists1(){
-        CreateUserPayload createUserPayload=new CreateUserPayload();
-        createUserPayload.setName("Tenali");
-        createUserPayload.setEmail("tenali.ramakrishna@15ce.com");
-        createUserPayload.setStatus("active");
-        createUserPayload.setGender("male");
+        CreateUserPayload createUserPayload= new CreateUserPayload();
         GoRestClient goRestClient=new GoRestClient();
-        Response response= goRestClient.postUserLists(createUserPayload);
+        Response response= goRestClient.postUserLists(createUserPayload.createUserPayload("Tenali","tenali.ramakrishna@15ce.com","male","active"));
         System.out.println(response.toString());
 
 
     }
+
+
 
 
 }
