@@ -1,6 +1,7 @@
 package com.autobot.api.RequestSpec;
 
 import com.autobot.api.constants.RequestType;
+import com.google.inject.Inject;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -14,8 +15,8 @@ import static io.restassured.RestAssured.given;
 
 public class Requests {
 
+     SpecificationBuilder specificationBuilder= new SpecificationBuilder();
     public Response getRequest(String baseUri,String requestPath, Map<String,Object> m){
-        SpecificationBuilder specificationBuilder = new SpecificationBuilder();
         return given(specificationBuilder.getRequestSpecification(baseUri))
                 .headers(m)
                 .when().get(requestPath)
@@ -25,7 +26,6 @@ public class Requests {
     }
 
     public Response postRequest(String baseUri,String requestPath, Object payload, Map<String,Object> m){
-        SpecificationBuilder specificationBuilder = new SpecificationBuilder();
         return given(specificationBuilder.getRequestSpecification(baseUri))
                 .headers(m)
                 .when()

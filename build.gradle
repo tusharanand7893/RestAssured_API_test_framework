@@ -1,13 +1,36 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.3"
+    }
+}
 plugins {
     id 'java'
+    id "io.qameta.allure" version "2.8.1"
 }
+
+allure {
+    version = '2.8.1'
+
+}
+
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    google()
 }
+
+configurations {
+    compile
+}
+
+
+
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
@@ -27,9 +50,21 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
     // https://mvnrepository.com/artifact/com.google.inject/guice
-    implementation group: 'com.google.inject', name: 'guice', version: '5.1.0'
+    //implementation group: 'com.google.inject', name: 'guice', version: '5.1.0'
+    implementation group: 'com.google.inject', name: 'guice', version: '4.2.3'
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     implementation group: 'org.assertj', name: 'assertj-core', version: '3.23.1'
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-gradle
+    // https://mvnrepository.com/artifact/io.qameta.allure/allure-gradle
+    //implementation 'io.qameta.allure:allure-gradle:2.11.1'
+
+  // implementation group: 'io.qameta.allure', name: 'allure-gradle', version: '2.21.0'
+    implementation group: 'io.qameta.allure', name: 'allure-java-commons', version: '2.13.2'
+    implementation group: 'io.qameta.allure', name: 'allure-testng', version: '2.13.2'
+
+    implementation('io.qameta.allure:allure-okhttp3:2.10.0')
+    implementation('io.qameta.allure:allure-rest-assured:2.10.0')
+
 
 
 }
